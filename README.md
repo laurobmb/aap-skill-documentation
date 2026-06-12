@@ -22,11 +22,28 @@ Skills são arquivos `SKILL.md` que ensinam o agente de IA do Cursor a responder
 | `aap-26-controller-uso` | Job Templates, Workflows + Visualizer, Inventories dinâmicos (VMware/Satellite/AWS/Azure), Instance Groups, API REST e webhooks | ~2 guias |
 | `aap-26-analytics-migracao` | Migração entre deployment types (RPM→Container, RPM→OCP), Automation Calculator (ROI), Savings Planner, Job Explorer | ~2 guias |
 | `aap-26-dashboard` | Automation Dashboard (app local para métricas de até 3 instâncias AAP), clusters.yaml, token rotation, ROI, troubleshooting | 1 guia |
-| `aap-26-dev-tools` | ansible-navigator (TUI/stdout, EEs, coleções, artifacts), Ansible Lightspeed Coding Assistant (VS Code, trial, on-premise), **Automation Intelligent Assistant** (chatbot na UI do AAP com MCP server — GA no OCP, Tech Preview no containerizado) | 3 guias + docs oficiais |
+| `aap-26-dev-tools` | ansible-navigator (TUI/stdout, EEs, coleções, artifacts), Ansible Lightspeed Coding Assistant (VS Code, trial, on-premise), Automation Intelligent Assistant com MCP server (chatbot na UI do AAP — GA no OCP, Tech Preview no containerizado) | 3 guias + docs oficiais |
 | `aap-26-self-service` | Self-Service Automation Portal (Helm/OCP, sincronização de templates, custom templates, RBAC, troubleshooting SSL) | 3 guias |
 | `aap-26-developer-hub` | Ansible Plug-ins para Red Hat Developer Hub (Learn→Operate, Dev Spaces, software templates, instalação Helm/Operator) | 2 guias |
 
 > Total: **~38 guias oficiais Red Hat** destilados em ~900 páginas de conteúdo estruturado.
+
+---
+
+## Sobre o MCP no AAP 2.6
+
+O AAP 2.6 inclui o **Automation Intelligent Assistant** — um chatbot de IA embutido diretamente na interface do AAP (canto superior direito). Ele usa LLMs para responder perguntas sobre o ambiente em linguagem natural e se integra ao **MCP server** para buscar dados reais em tempo real:
+
+| MCP Container | Ativa com | Expõe |
+|---|---|---|
+| `ansible-mcp-lightspeed` | `aap_gateway_url` | Dados do Platform Gateway (usuários, orgs, tokens) |
+| `ansible-mcp-controller` | `aap_gateway_url` + `aap_controller_url` | Job Templates, jobs, inventories, credentials do Controller |
+
+**Modelos LLM suportados:** RHEL AI (vLLM), OpenShift AI (vLLM), Red Hat AI Inference Server, OpenAI, Azure OpenAI.
+
+**Status no AAP 2.6:** Integração MCP **Generally Available** no OCP (Operator) · **Technology Preview** no deployment containerizado (RHEL).
+
+> Para detalhes completos de deploy, exemplos de secrets e variáveis de inventário, consulte a skill `aap-26-dev-tools`, capítulo `ch05-intelligent-assistant`.
 
 ---
 
@@ -108,9 +125,11 @@ Usando aap-26-analytics-migracao, como calcular e apresentar o ROI da automaçã
 Usando aap-26-dashboard, como conectar o Automation Dashboard a duas instâncias AAP?
 Usando aap-26-dashboard, como resolver erro 401 na sincronização do dashboard?
 
-# Ferramentas de desenvolvimento
+# Ferramentas de desenvolvimento e IA
 Usando aap-26-dev-tools, como configurar o ansible-navigator para usar um EE corporativo?
 Usando aap-26-dev-tools, como ativar o Ansible Lightspeed no VS Code?
+Usando aap-26-dev-tools, como implantar o chatbot inteligente no AAP com MCP server?
+Usando aap-26-dev-tools, como configurar o chatbot-configuration-secret para OpenAI?
 
 # Self-service portal
 Usando aap-26-self-service, como instalar o Self-Service Portal no OpenShift via Helm?
@@ -141,7 +160,7 @@ aap-26-<nome>/
 
 ## Origem do conteúdo
 
-Gerado a partir da documentação oficial Red Hat AAP 2.6 usando extração técnica com [docling](https://github.com/DS4SD/docling), preservando tabelas e blocos de código.
+Gerado a partir da documentação oficial Red Hat AAP 2.6, com extração técnica usando [docling](https://github.com/DS4SD/docling) para preservar tabelas e blocos de código dos PDFs originais.
 
 | Guia | Skill |
 |---|---|
@@ -172,6 +191,7 @@ Gerado a partir da documentação oficial Red Hat AAP 2.6 usando extração téc
 | Using content navigator (ansible-navigator) | aap-26-dev-tools |
 | Ansible Lightspeed User Guide | aap-26-dev-tools |
 | Ansible Lightspeed Release Notes | aap-26-dev-tools |
+| Deploy the automation intelligent assistant (MCP) | aap-26-dev-tools |
 | Installing self-service automation portal | aap-26-self-service |
 | Configuring self-service automation portal | aap-26-self-service |
 | Using self-service automation portal | aap-26-self-service |
@@ -183,3 +203,13 @@ Gerado a partir da documentação oficial Red Hat AAP 2.6 usando extração téc
 ## Contribuindo
 
 Pull requests são bem-vindos para corrigir imprecisões ou adicionar conteúdo de novos guias do AAP 2.6.
+
+---
+
+## Créditos
+
+A estrutura de skills adotada neste repositório — formato `SKILL.md`, divisão em capítulos, glossário, cheatsheet e patterns — foi inspirada no projeto **[book-to-skill](https://github.com/virgiliojr94/book-to-skill)**, criado por [@virgiliojr94](https://github.com/virgiliojr94).
+
+O `book-to-skill` é uma ferramenta que converte documentos técnicos (PDFs, EPUBs, DOCX) em skills estruturados para agentes de IA como Cursor, GitHub Copilot CLI, Amp e Claude Code. Foi ele que tornou possível transformar os ~38 guias oficiais da Red Hat em conteúdo consumível diretamente pelo agente de IA, sem precisar abrir um único PDF.
+
+> Se você quiser criar skills a partir de outras documentações, comece por lá.
