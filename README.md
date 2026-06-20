@@ -12,7 +12,7 @@ Skills são arquivos `SKILL.md` que ensinam o agente de IA do Cursor a responder
 
 ## Skills disponíveis — AAP 2.7 (branch `v2.7`)
 
-> **AAP 2.7 — 16 PDFs oficiais → 8 skills** *(administer.pdf e develop.pdf são grandes o suficiente para skills dedicadas)*
+> **AAP 2.7 — 16 PDFs oficiais → 11 skills** *(administer.pdf e develop.pdf são consolidados em múltiplas skills temáticas)*
 
 | Skill | Conteúdo | Fonte |
 |---|---|---|
@@ -24,6 +24,9 @@ Skills são arquivos `SKILL.md` que ensinam o agente de IA do Cursor a responder
 | `aap-27-upgrade` | **Breaking changes 2.7** (RPM removido, auth direta removida), checklist pré-upgrade, detecção de acesso direto, upgrade containerizado/OCP, migração auth/CaC/APIs | upgrade + migrate + reference + whats-new |
 | `aap-27-controller-uso` | **Job Templates** (todos os campos, surveys, job slicing, extra_vars, webhooks SCM), **Workflows** (visualizer, convergência, approval nodes, artifacts), **Projects** (SCM, branch override, git refspec), **Inventários dinâmicos** (VMware vCenter/ESXi, AWS EC2, Azure, Satellite, Terraform State, OpenShift Virtualization, GCE), **Notificações** (Slack, email, webhook, PagerDuty) | administer + develop |
 | `aap-27-mesh-backup` | **Automation Mesh** (hybrid/control/execution/hop, topologias de design, single-hop, multi-hop, outbound-only), adição de nós em OCP via UI, Mesh Ingress (sem inbound), topology viewer, CA customizada, **Backup/Restore** (containerizado: backup.yml/restore.yml; OCP: AnsibleAutomationPlatformBackup CR; metrics service) | administer |
+| `aap-27-hub-admin` | **Private Automation Hub** — autenticação 2.7 (offline token via Gateway), sync rh-certified (console.redhat.com) e community (Galaxy), namespaces + times + fluxo de aprovação de coleções, tipos de repositório (staging/approved/custom), container registry (pull/push/tag EEs, sync de registros externos, permissões de times), assinatura GPG de conteúdo | administer |
+| `aap-27-eda-operacao` | **Event-Driven Ansible** — ciclo de vida de Rulebook Activations (criar, habilitar/desabilitar/reiniciar/duplicar, restart policy, log levels), **Event Streams** (6 tipos: HMAC/Basic/Token/OAuth2/ECDSA/mTLS; GitHub/GitLab/ServiceNow/Dynatrace especializados), headers HTTP seguros, UUID estático para DR, modo teste, Rule Audit, webhooks em OCP (Route), troubleshooting (IDs de rastreamento tid/aiid/rid, pending, restart loop) | administer |
+| `aap-27-api-rest` | **API REST do Controller** — navegação (endpoint /api/controller/v2/), named URLs (acesso por nome sem PK), filtros avançados (field lookups, OR/AND/NOT/chain), autenticação OAuth2 PAT (recomendado), Basic, Session, SSO; exemplos práticos (lançar JT/WF, monitorar jobs, criar inventário), **Metrics Service API** (/api/metrics/v1/health/, /tasks/) | develop |
 
 **Breaking changes obrigatórios documentados no 2.7:**
 - Instalador RPM **removido** — apenas Container (RHEL+Podman) e Operator (OCP)
@@ -110,6 +113,33 @@ Após copiar as skills para `~/.cursor/skills/`, elas ficam disponíveis automat
 
 "Como criar inventário dinâmico do VMware vCenter ou Terraform State?"
 → usa aap-27-controller-uso
+
+"Como configuro o Hub para sincronizar coleções certificadas Red Hat para 30 organizações?"
+→ usa aap-27-hub-admin
+
+"Como criar namespaces e times para publicar coleções internas com aprovação?"
+→ usa aap-27-hub-admin
+
+"Como fazer push de EE customizada para o registry do Hub?"
+→ usa aap-27-hub-admin
+
+"Como criar um event stream do GitHub (HMAC) para disparar automações no EDA?"
+→ usa aap-27-eda-operacao
+
+"Minha rulebook activation está presa em Pending ou reiniciando em loop. Como resolver?"
+→ usa aap-27-eda-operacao
+
+"Como integrar o GLPI com EDA via webhook em OCP (Route)?"
+→ usa aap-27-eda-operacao
+
+"Como lançar um Job Template via API REST com curl ou Python?"
+→ usa aap-27-api-rest
+
+"Como filtrar jobs por status, data e organização via API?"
+→ usa aap-27-api-rest
+
+"Como criar um token OAuth2 para uso em CI/CD?"
+→ usa aap-27-api-rest
 ```
 
 ---
@@ -148,7 +178,12 @@ O AAP 2.7 introduz o **Ansible MCP Server** como componente standalone (Tech Pre
 | `aap-whats-new-2-7-pdf.pdf` | aap-27-upgrade |
 | `aap-discover-2-7-pdf.pdf` | aap-27-upgrade |
 
-> O `aap-administer-2-7-pdf.pdf` (13MB, ~12.000 linhas) e `aap-develop-2-7-pdf.pdf` (23MB, ~20.000 linhas) contêm conteúdo suficiente para mais de uma skill — daí a separação em `aap-27-controller-uso` e `aap-27-mesh-backup`.
+> O `aap-administer-2-7-pdf.pdf` (13MB, ~12.000 linhas) e `aap-develop-2-7-pdf.pdf` (23MB, ~20.000 linhas) contêm conteúdo suficiente para mais de uma skill — daí a separação em `aap-27-controller-uso`, `aap-27-mesh-backup`, `aap-27-hub-admin`, `aap-27-eda-operacao` e `aap-27-api-rest`.
+
+| PDF Oficial | Skills mapeadas |
+|---|---|
+| `aap-administer-2-7-pdf.pdf` | aap-27-seguranca + **aap-27-controller-uso** + **aap-27-mesh-backup** + **aap-27-hub-admin** + **aap-27-eda-operacao** |
+| `aap-develop-2-7-pdf.pdf` | aap-27-desenvolvimento + **aap-27-controller-uso** + **aap-27-api-rest** |
 
 ---
 
